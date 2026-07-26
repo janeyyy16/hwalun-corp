@@ -1,6 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import logo from "@/assets/images/logo-white.png";
+import { Bilingual } from "@/lib/language";
+
+const QUICK_LINKS: { to: string; en: string; zh: string }[] = [
+  { to: "/about", en: "About Us", zh: "關於我們" },
+  { to: "/services", en: "Services", zh: "服務項目" },
+  { to: "/careers", en: "Careers", zh: "招聘職缺" },
+  { to: "/partners", en: "Partners", zh: "合作夥伴" },
+  { to: "/contact", en: "Contact", zh: "聯絡我們" },
+];
 
 export function Footer() {
   return (
@@ -8,25 +17,26 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <img src={logo} alt="Hwa Lun Corporation" className="h-9 w-auto" />
-          <p className="mt-4 text-sm leading-relaxed">
-            A large-scale integrated construction company delivering general contracting, interior fit-out, and
-            curtain wall decoration projects across the Philippines and beyond.
-          </p>
+          <Bilingual
+            as="p"
+            className="mt-4 text-sm leading-relaxed"
+            en="A large-scale integrated construction company delivering general contracting, interior fit-out, and curtain wall decoration projects across the Philippines and beyond."
+            zh="大型綜合性建築企業，於菲律賓及海外提供總承包工程、室內裝修與幕牆裝飾服務。"
+          />
         </div>
 
         <div>
-          <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-white">Quick Links</h3>
+          <Bilingual
+            as="h3"
+            className="mb-4 text-sm font-bold uppercase tracking-wide text-white"
+            en="Quick Links"
+            zh="快速連結"
+          />
           <ul className="space-y-2.5 text-sm">
-            {[
-              ["/about", "About Us"],
-              ["/services", "Services"],
-              ["/careers", "Careers"],
-              ["/partners", "Partners"],
-              ["/contact", "Contact"],
-            ].map(([to, label]) => (
-              <li key={to}>
-                <Link to={to} className="transition-colors hover:text-white">
-                  {label}
+            {QUICK_LINKS.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to} className="transition-colors hover:text-white">
+                  <Bilingual en={l.en} zh={l.zh} />
                 </Link>
               </li>
             ))}
@@ -34,7 +44,12 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-white">Manila Office</h3>
+          <Bilingual
+            as="h3"
+            className="mb-4 text-sm font-bold uppercase tracking-wide text-white"
+            en="Manila Office"
+            zh="馬尼拉辦事處"
+          />
           <ul className="space-y-3 text-sm">
             <li className="flex gap-2.5">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />
@@ -54,7 +69,12 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-white">Main Office &amp; Factory</h3>
+          <Bilingual
+            as="h3"
+            className="mb-4 text-sm font-bold uppercase tracking-wide text-white"
+            en="Main Office & Factory"
+            zh="總部暨工廠"
+          />
           <ul className="space-y-3 text-sm">
             <li className="flex gap-2.5">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />

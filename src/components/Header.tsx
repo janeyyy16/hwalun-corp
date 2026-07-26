@@ -2,18 +2,20 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/images/logo.png";
+import { BilingualLabel, useLanguage, type Bi } from "@/lib/language";
 
-const NAV_LINKS = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/services", label: "Services" },
-  { to: "/careers", label: "Careers" },
-  { to: "/partners", label: "Partners" },
-  { to: "/contact", label: "Contact" },
+const NAV_LINKS: { to: string; label: Bi }[] = [
+  { to: "/", label: { en: "Home", zh: "首頁" } },
+  { to: "/about", label: { en: "About", zh: "關於我們" } },
+  { to: "/services", label: { en: "Services", zh: "服務項目" } },
+  { to: "/careers", label: { en: "Careers", zh: "招聘職缺" } },
+  { to: "/partners", label: { en: "Partners", zh: "合作夥伴" } },
+  { to: "/contact", label: { en: "Contact", zh: "聯絡我們" } },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { language, toggle } = useLanguage();
 
   return (
     <header className="glass sticky top-0 z-50 border-b border-black/5">
@@ -31,17 +33,27 @@ export function Header() {
               activeProps={{ className: "text-[var(--color-primary)]" }}
               activeOptions={{ exact: l.to === "/" }}
             >
-              {l.label}
+              <BilingualLabel en={l.label.en} zh={l.label.zh} />
             </Link>
           ))}
         </nav>
 
-        <Link
-          to="/contact"
-          className="hidden rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 md:inline-block"
-        >
-          Get a Quote
-        </Link>
+        <div className="hidden items-center gap-4 md:flex">
+          <button
+            type="button"
+            onClick={toggle}
+            className="rounded-full border border-black/10 px-3 py-1.5 text-xs font-bold text-[var(--color-steel)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+            aria-label="Toggle language"
+          >
+            {language === "en" ? "中文" : "EN"}
+          </button>
+          <Link
+            to="/contact"
+            className="rounded-full bg-[var(--color-primary)] px-5 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105"
+          >
+            <BilingualLabel en="Get a Quote" zh="免費報價" className="flex-row gap-1.5" subClassName="opacity-80" />
+          </Link>
+        </div>
 
         <button
           type="button"
@@ -65,15 +77,22 @@ export function Header() {
               activeProps={{ className: "text-[var(--color-primary)]" }}
               activeOptions={{ exact: l.to === "/" }}
             >
-              {l.label}
+              <BilingualLabel en={l.label.en} zh={l.label.zh} className="items-start" />
             </Link>
           ))}
+          <button
+            type="button"
+            onClick={toggle}
+            className="mt-2 self-start rounded-full border border-black/10 px-3 py-1.5 text-xs font-bold text-[var(--color-steel)]"
+          >
+            {language === "en" ? "切換至中文" : "Switch to EN"}
+          </button>
           <Link
             to="/contact"
             onClick={() => setOpen(false)}
             className="mt-2 rounded-full bg-[var(--color-primary)] px-5 py-2.5 text-center text-sm font-semibold text-white"
           >
-            Get a Quote
+            <BilingualLabel en="Get a Quote" zh="免費報價" subClassName="opacity-80" />
           </Link>
         </nav>
       )}
