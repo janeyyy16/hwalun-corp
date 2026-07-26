@@ -40,7 +40,8 @@ function Contact() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
+    const formEl = e.currentTarget;
+    const form = new FormData(formEl);
     const name = form.get("name") as string;
     const email = form.get("email") as string;
     const message = form.get("message") as string;
@@ -51,7 +52,7 @@ function Contact() {
       setStatus("error");
       return;
     }
-    e.currentTarget.reset();
+    formEl.reset();
     setStatus("sent");
   }
 
